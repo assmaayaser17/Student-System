@@ -1,0 +1,232 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f5f3ee;
+  --bg-soft: #ebe7dc;
+  --fg: #16140f;
+  --fg-soft: #5f5340;
+  --muted: #9c8d72;
+  --border: rgba(22, 20, 15, 0.08);
+  --glass-bg: rgba(255, 253, 248, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-shadow: 0 8px 32px rgba(31, 38, 60, 0.08);
+  --aurora-1: #ffb8a0;
+  --aurora-2: #c4d8ff;
+  --aurora-3: #ffe2a8;
+  --aurora-4: #d8c4ff;
+}
+
+.dark {
+  --bg: #0c0a08;
+  --bg-soft: #16140f;
+  --fg: #f8f7f5;
+  --fg-soft: #bdb19b;
+  --muted: #7e6f56;
+  --border: rgba(255, 253, 248, 0.08);
+  --glass-bg: rgba(22, 20, 15, 0.5);
+  --glass-border: rgba(255, 253, 248, 0.08);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --aurora-1: #e85d2f;
+  --aurora-2: #2a4a8f;
+  --aurora-3: #b8852a;
+  --aurora-4: #6a3aa8;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100vh;
+}
+
+body {
+  font-feature-settings: "ss01", "cv11";
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: var(--aurora-1);
+  color: var(--fg);
+}
+
+/* Aurora background */
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.55;
+  mix-blend-mode: normal;
+}
+
+.dark .aurora-blob {
+  opacity: 0.35;
+  filter: blur(100px);
+}
+
+.aurora-blob-1 {
+  width: 60vw;
+  height: 60vw;
+  top: -20vw;
+  left: -10vw;
+  background: var(--aurora-1);
+  animation: aurora 18s ease-in-out infinite;
+}
+
+.aurora-blob-2 {
+  width: 55vw;
+  height: 55vw;
+  top: 10vh;
+  right: -15vw;
+  background: var(--aurora-2);
+  animation: aurora 22s ease-in-out infinite reverse;
+  animation-delay: -4s;
+}
+
+.aurora-blob-3 {
+  width: 50vw;
+  height: 50vw;
+  bottom: -15vw;
+  left: 20vw;
+  background: var(--aurora-3);
+  animation: aurora 25s ease-in-out infinite;
+  animation-delay: -8s;
+}
+
+.aurora-blob-4 {
+  width: 40vw;
+  height: 40vw;
+  bottom: 5vh;
+  right: 5vw;
+  background: var(--aurora-4);
+  animation: aurora 20s ease-in-out infinite reverse;
+  animation-delay: -12s;
+}
+
+/* Grain texture overlay */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.dark .grain-overlay {
+  opacity: 0.25;
+  mix-blend-mode: soft-light;
+}
+
+/* Glass panel */
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-soft {
+  background: var(--glass-bg);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+}
+
+/* Custom scrollbar */
+.scroll-thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scroll-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+}
+.scroll-thin::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+/* Highlight inside search results */
+mark.search-highlight {
+  background: linear-gradient(
+    180deg,
+    transparent 55%,
+    var(--aurora-1) 55%
+  );
+  color: inherit;
+  padding: 0 2px;
+  border-radius: 2px;
+  font-weight: 500;
+}
+
+.dark mark.search-highlight {
+  background: linear-gradient(
+    180deg,
+    transparent 55%,
+    rgba(232, 93, 47, 0.45) 55%
+  );
+}
+
+/* Shimmer skeleton */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--border) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Focus ring */
+.focus-ring {
+  outline: none;
+  transition: box-shadow 0.18s ease;
+}
+.focus-ring:focus-visible {
+  box-shadow:
+    0 0 0 2px var(--bg),
+    0 0 0 4px var(--accent, #e85d2f);
+}
+
+/* Utility for ticker-like dotted divider */
+.dotted-divider {
+  background-image: radial-gradient(
+    circle,
+    var(--border) 1px,
+    transparent 1px
+  );
+  background-size: 8px 1px;
+  background-repeat: repeat-x;
+  background-position: center;
+  height: 1px;
+}
